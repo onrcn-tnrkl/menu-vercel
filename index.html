@@ -2,14 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
       <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html, body { height: 100%; }
+      body { font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+      h1, h2 { font-family: 'Nunito', ui-sans-serif; font-weight: 800; }
+      /* simple 2-line clamp utility */
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        overflow: hidden;
+      }
+    </style>
 
-    <title>Vite + Vue</title>
+    <title>Hoş geldiniz | Pams Menu</title>
   </head>
-  <body class="h-screen w-full flex items-center justify-center ">
-    <div id="app" class="w-full max-w-2xl p-4"></div>
+  <body class="min-h-screen w-full antialiased bg-[#f7f5f2]">
+    <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

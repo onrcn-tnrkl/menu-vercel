@@ -1,18 +1,25 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen pt-8 w-full px-4 bg-green-100">
-    <img
-      src="./assets/logo.png"
-      alt="Logo"
-      class="w-32 h-32 mb-4 rounded-full object-cover shadow-lg"
-    />
+  <div class="w-full">
+    <header class="w-full">
+      <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
+        <img
+          src="./assets/logo.png"
+          alt="Logo"
+          class="w-24 h-24 mb-2 rounded-full object-cover shadow-md"
+        />
+        <h1 class="text-xl font-semibold text-gray-800">Pams Menu</h1>
+      </div>
+    </header>
 
-    <div v-if="isLoading" class="text-gray-500">Yükleniyor...</div>
-    <div v-else-if="error" class="text-red-500">Hata: {{ error }}</div>
-
-    <!-- MenuComponent artık full width kapsayıcıda -->
-    <div v-else  class="w-full max-w-5xl">
-      <MenuComponent />
-    </div>
+    <main class="w-full">
+      <div class="max-w-6xl mx-auto px-4 pb-10">
+        <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
+        <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
+        <div v-else>
+          <MenuComponent />
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
