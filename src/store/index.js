@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { get, ref, onValue } from "firebase/database";
+import { get, ref } from "firebase/database";
 import { db } from "../firebase";
 
 export default createStore({
@@ -58,44 +58,6 @@ export default createStore({
       } finally {
         commit("SET_LOADING", false);
       }
-    },
-    subscribeRealtime({ commit }) {
-      // İlk yükleme göstergesi
-      commit('SET_LOADING', true);
-
-      // Products
-      const productsRef = ref(db, 'products');
-      const unsubscribeProducts = onValue(productsRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const products = Object.values(snapshot.val()).map((item, index) => ({ id: index, ...item }));
-          commit('SET_MENU', products);
-        } else {
-          commit('SET_MENU', []);
-        }
-        commit('SET_LOADING', false);
-      }, (error) => {
-        commit('SET_ERROR', error.message);
-        commit('SET_LOADING', false);
-      });
-
-      // Categories
-      const categoriesRef = ref(db, 'category');
-      const unsubscribeCategories = onValue(categoriesRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const categories = Object.values(snapshot.val()).map((item, index) => ({ id: index, ...item }));
-          commit('SET_CATEGORIES', categories);
-        } else {
-          commit('SET_CATEGORIES', []);
-        }
-      }, (error) => {
-        commit('SET_ERROR', error.message);
-      });
-
-      // Unsubscribe handler'ı döndür
-      return () => {
-        try { unsubscribeProducts && unsubscribeProducts(); } catch {}
-        try { unsubscribeCategories && unsubscribeCategories(); } catch {}
-      };
     }
   },
   getters: {
