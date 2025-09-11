@@ -26,21 +26,14 @@
 
 
 <script setup>
-import { onMounted, onUnmounted, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
-const isLoading = computed(() => store.getters.isLoading);
 
 onMounted(() => {
-  // Gerçek zamanlı güncellemeleri başlat
-  const unsubscribe = store.dispatch("subscribeRealtime");
-  onUnmounted(() => {
-    if (typeof unsubscribe === 'function') {
-      unsubscribe();
-    }
-  });
+  store.dispatch("fetchAllData"); // Yeni action'ı dispatch edin
 });
 </script>
