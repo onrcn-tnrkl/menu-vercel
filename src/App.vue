@@ -5,7 +5,7 @@
         <img
           src="./assets/logo.png"
           alt="Logo"
-          class="w-24 h-24 mb-2 rounded-full object-cover shadow-md"
+          class="w-48 h-48 mb-2 rounded-full object-cover shadow-md"
         />
         <h1 class="text-xl font-semibold text-gray-800">Pams No : 49</h1>
       </div>
