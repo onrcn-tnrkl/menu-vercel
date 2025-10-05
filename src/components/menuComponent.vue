@@ -13,32 +13,38 @@
       </h2>
 
       <ul class="bg-white/90 backdrop-blur rounded-2xl shadow-md border border-emerald-100 divide-y divide-emerald-50">
-        <li
+       <li
           v-for="item in menuItems
             .filter(i => i.category_id === category.id)
             .sort((a, b) => a.price - b.price)"
           :key="item.id"
-          class="relative flex items-start justify-between gap-4 p-4 hover:bg-emerald-50/60 transition-colors"
-          :class="{ 'opacity-50 blur-[1px] pointer-events-none': item.is_active === false }"
+          class="relative p-4 hover:bg-emerald-50/60 transition-colors rounded-lg"
         >
-          <div class="flex-1 min-w-0">
-            <p class="font-medium text-gray-900 truncate">{{ item.name }}</p>
-            <p v-if="item.description" class="mt-1 text-sm text-emerald-900/70 leading-snug line-clamp-2">
-              {{ item.description }}
-            </p>
+          <!-- Ürün içeriği -->
+          <div
+            class="flex items-start justify-between gap-4"
+            :class="{ 'opacity-50 blur-[1px] pointer-events-none': item.is_active === false }"
+          >
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-gray-900 truncate">{{ item.name }}</p>
+              <p v-if="item.description" class="mt-1 text-sm text-emerald-900/70 leading-snug line-clamp-2">
+                {{ item.description }}
+              </p>
+            </div>
+            <span class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold">
+              ₺ {{ Number(item.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+            </span>
           </div>
-          <span class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold">
-            ₺ {{ Number(item.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-          </span>
         
           <!-- Mevcut değil mesajı -->
           <div
             v-if="item.is_active === false"
-            class="absolute inset-0 flex items-center justify-center text-red-600 font-semibold text-sm bg-white/60 rounded-lg"
+            class="absolute inset-0 flex items-center justify-center text-red-600 font-semibold text-sm bg-white/70 rounded-lg"
           >
             Şu an mevcut değil
           </div>
         </li>
+
 
 
 
