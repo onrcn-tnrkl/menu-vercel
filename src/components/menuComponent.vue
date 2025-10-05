@@ -18,10 +18,8 @@
             .filter(i => i.category_id === category.id)
             .sort((a, b) => a.price - b.price)"
           :key="item.id"
-          :class="[
-            'flex items-start justify-between gap-4 p-4 hover:bg-emerald-50/60 transition-colors',
-            { 'opacity-50 blur-[1px] pointer-events-none': item.is_active === false }
-          ]"
+          class="relative flex items-start justify-between gap-4 p-4 hover:bg-emerald-50/60 transition-colors"
+          :class="{ 'opacity-50 blur-[1px] pointer-events-none': item.is_active === false }"
         >
           <div class="flex-1 min-w-0">
             <p class="font-medium text-gray-900 truncate">{{ item.name }}</p>
@@ -32,7 +30,16 @@
           <span class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold">
             ₺ {{ Number(item.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
           </span>
+        
+          <!-- Mevcut değil mesajı -->
+          <div
+            v-if="item.is_active === false"
+            class="absolute inset-0 flex items-center justify-center text-red-600 font-semibold text-sm bg-white/60 rounded-lg"
+          >
+            Şu an mevcut değil
+          </div>
         </li>
+
 
 
       </ul>
