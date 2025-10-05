@@ -18,7 +18,10 @@
             .filter(i => i.category_id === category.id)
             .sort((a, b) => a.price - b.price)"
           :key="item.id"
-          class="flex items-start justify-between gap-4 p-4 hover:bg-emerald-50/60 transition-colors"
+          :class="[
+            'flex items-start justify-between gap-4 p-4 hover:bg-emerald-50/60 transition-colors',
+            { 'opacity-50 blur-[1px] pointer-events-none': item.is_active === false }
+          ]"
         >
           <div class="flex-1 min-w-0">
             <p class="font-medium text-gray-900 truncate">{{ item.name }}</p>
@@ -30,6 +33,7 @@
             ₺ {{ Number(item.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
           </span>
         </li>
+
 
       </ul>
     </div>
