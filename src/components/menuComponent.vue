@@ -2,8 +2,32 @@
   <div class="max-w-5xl mx-auto p-4">
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
+    <!-- Kategori Seçim Bölümü -->
+    <div class="mb-6">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+        <button
+          type="button"
+          class="shrink-0 px-3 py-1.5 rounded-full border text-sm transition-colors"
+          :class="selectedCategoryId === 'all' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50'"
+          @click="selectedCategoryId = 'all'"
+        >
+          Tümü
+        </button>
+        <button
+          v-for="category in categories"
+          :key="category.id"
+          type="button"
+          class="shrink-0 px-3 py-1.5 rounded-full border text-sm transition-colors"
+          :class="selectedCategoryId === category.id ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50'"
+          @click="selectedCategoryId = category.id"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
+
     <div
-      v-for="category in categories"
+      v-for="category in visibleCategories"
       :key="category.id"
       class="mb-8"
     >
@@ -54,7 +78,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -63,6 +87,17 @@ const menuItems = computed(() => store.getters.menuItems);
 const categories = computed(() => store.getters.categories);
 const isLoading = computed(() => store.getters.isLoading);
 const error = computed(() => store.getters.error);
+
+// Kategori filtresi için seçim durumu
+const selectedCategoryId = ref('all');
+
+// Seçime göre görüntülenecek kategoriler
+const visibleCategories = computed(() => {
+  if (selectedCategoryId.value === 'all') {
+    return categories.value;
+  }
+  return categories.value.filter(category => category.id === selectedCategoryId.value);
+});
 
 onMounted(() => {
   store.dispatch("fetchAllData");
