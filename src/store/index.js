@@ -41,7 +41,7 @@ export default createStore({
         }
 
         // Kategorileri çekme
-        const categoriesRef = ref(db, 'category'); // Veritabanı yoluna göre
+        const categoriesRef = ref(db, 'categories'); // Veritabanı yoluna göre
         const categoriesSnapshot = await get(categoriesRef);
         if (categoriesSnapshot.exists()) {
           const categories = Object.values(categoriesSnapshot.val()).map((item, index) => ({
