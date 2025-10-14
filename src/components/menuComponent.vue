@@ -14,7 +14,7 @@
           Tümü
         </button>
         <button
-          v-for="category in categories"
+          v-for="category in categoriesWithProducts"
           :key="category.id"
           type="button"
           class="shrink-0 px-3 py-1.5 rounded-full border text-sm transition-colors"
@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -91,12 +91,26 @@ const error = computed(() => store.getters.error);
 // Kategori filtresi için seçim durumu
 const selectedCategoryId = ref('all');
 
-// Seçime göre görüntülenecek kategoriler
+// Ürünü olmayan kategorileri gizlemek için, ürünü olan kategorileri hesapla
+const categoriesWithProducts = computed(() => {
+  const items = menuItems.value ?? [];
+  const existingCategoryIds = new Set(items.map(item => item.category_id));
+  return (categories.value ?? []).filter(category => existingCategoryIds.has(category.id));
+});
+
+// Seçime göre görüntülenecek kategoriler (yalnızca ürünü olanlar)
 const visibleCategories = computed(() => {
   if (selectedCategoryId.value === 'all') {
-    return categories.value;
+    return categoriesWithProducts.value;
   }
-  return categories.value.filter(category => category.id === selectedCategoryId.value);
+  return categoriesWithProducts.value.filter(category => category.id === selectedCategoryId.value);
+});
+
+// Seçili kategori artık yoksa veya ürünü kalmadıysa, 'all' konumuna dön
+watch([categoriesWithProducts, selectedCategoryId], ([availableCategories, selected]) => {
+  if (selected !== 'all' && !availableCategories.some(category => category.id === selected)) {
+    selectedCategoryId.value = 'all';
+  }
 });
 
 onMounted(() => {
