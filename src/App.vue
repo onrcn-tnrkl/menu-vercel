@@ -25,7 +25,7 @@
       <div
         class="max-w-6xl mx-auto px-4 py-6 border-t border-emerald-100 text-center text-sm text-emerald-900/70"
       >
-        © {{ currentYear }} Pams No : 49. Tüm hakları saklıdır.
+        © {{ currentYear }} Onurcan Tanrıkulu. Tüm hakları saklıdır.
       </div>
     </footer>
   </div>
