@@ -44,10 +44,16 @@ export default createStore({
         const categoriesRef = ref(db, 'categories'); // Veritabanı yoluna göre
         const categoriesSnapshot = await get(categoriesRef);
         if (categoriesSnapshot.exists()) {
-          const categories = Object.values(categoriesSnapshot.val()).map((item, index) => ({
-            id: index,
-            ...item,
-          }));
+          const categories = Object.values(categoriesSnapshot.val())
+            .map((item, index) => ({
+              id: index,
+              ...item,
+            }))
+            .sort((a, b) => {
+              const aOrder = typeof a.order === 'number' ? a.order : Number(a.order ?? Number.MAX_SAFE_INTEGER);
+              const bOrder = typeof b.order === 'number' ? b.order : Number(b.order ?? Number.MAX_SAFE_INTEGER);
+              return aOrder - bOrder;
+            });
           commit("SET_CATEGORIES", categories);
         } else {
           commit("SET_CATEGORIES", []);
