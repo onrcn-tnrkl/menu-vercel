@@ -14,7 +14,7 @@
           Tümü
         </button>
         <button
-          v-for="category in categories"
+          v-for="category in nonEmptyCategories"
           :key="category.id"
           type="button"
           class="shrink-0 px-3 py-1.5 rounded-full border text-sm transition-colors"
@@ -91,12 +91,18 @@ const error = computed(() => store.getters.error);
 // Kategori filtresi için seçim durumu
 const selectedCategoryId = ref('all');
 
+// Ürünü olmayan kategorileri gizlemek için filtrelenmiş kategori listesi
+const nonEmptyCategories = computed(() => {
+  const idsWithItems = new Set(menuItems.value.map(item => String(item.category_id)));
+  return categories.value.filter(category => idsWithItems.has(String(category.id)));
+});
+
 // Seçime göre görüntülenecek kategoriler
 const visibleCategories = computed(() => {
   if (selectedCategoryId.value === 'all') {
-    return categories.value;
+    return nonEmptyCategories.value;
   }
-  return categories.value.filter(category => category.id === selectedCategoryId.value);
+  return nonEmptyCategories.value.filter(category => category.id === selectedCategoryId.value);
 });
 
 onMounted(() => {
