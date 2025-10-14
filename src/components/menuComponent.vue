@@ -39,7 +39,7 @@
       <ul class="bg-white/90 backdrop-blur rounded-2xl shadow-md border border-emerald-100 divide-y divide-emerald-50">
        <li
           v-for="item in menuItems
-            .filter(i => i.category_id === category.id)
+            .filter(i => i.category_id === category.id && i.is_active)
             .sort((a, b) => a.price - b.price)"
           :key="item.id"
           class="relative p-4 hover:bg-emerald-50/60 transition-colors rounded-lg"
@@ -58,15 +58,7 @@
             <span class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold">
               ₺ {{ Number(item.price).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
             </span>
-          </div>
-        
-          <!-- Mevcut değil mesajı -->
-          <div
-            v-if="item.is_active === false"
-            class="absolute inset-0 flex items-center justify-center text-red-600 font-semibold text-sm bg-white/70 rounded-lg"
-          >
-            Şu an mevcut değil
-          </div>
+          </div>          
         </li>
 
 
