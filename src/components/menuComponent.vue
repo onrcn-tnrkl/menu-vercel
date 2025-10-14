@@ -86,7 +86,13 @@ const selectedCategoryId = ref('all');
 // Ürünü olmayan kategorileri gizlemek için filtrelenmiş kategori listesi
 const nonEmptyCategories = computed(() => {
   const idsWithItems = new Set(menuItems.value.map(item => String(item.category_id)));
-  return categories.value.filter(category => idsWithItems.has(String(category.id)));
+  return categories.value
+    .filter(category => idsWithItems.has(String(category.id)))
+    .sort((a, b) => {
+      const aOrder = typeof a.order === 'number' ? a.order : Number(a.order ?? Number.MAX_SAFE_INTEGER);
+      const bOrder = typeof b.order === 'number' ? b.order : Number(b.order ?? Number.MAX_SAFE_INTEGER);
+      return aOrder - bOrder;
+    });
 });
 
 // Seçime göre görüntülenecek kategoriler
