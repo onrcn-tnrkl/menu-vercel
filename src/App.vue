@@ -20,6 +20,14 @@
         </div>
       </div>
     </main>
+
+    <footer class="w-full">
+      <div
+        class="max-w-6xl mx-auto px-4 py-6 border-t border-emerald-100 text-center text-sm text-emerald-900/70"
+      >
+        © {{ currentYear }} Pams No : 49. Tüm hakları saklıdır.
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -32,6 +40,8 @@ import MenuComponent from "./components/menuComponent.vue";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
+
+const currentYear = new Date().getFullYear();
 
 onMounted(() => {
   store.dispatch("fetchAllData"); // Yeni action'ı dispatch edin
