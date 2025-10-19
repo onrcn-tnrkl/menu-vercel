@@ -3,26 +3,18 @@
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
     <!-- Üstteki banner -->
-    <div
-      v-if="props.showBanner"
-      class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none"
-    >
-      <!-- Eğer bannerImages varsa slider göster -->
-      <BannerSlider
-        v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
-        :images="props.bannerImages"
-        :interval-ms="4500"
-      />
-    
-      <!-- Yoksa banner.png göster -->
-      <div v-else class="rounded-2xl overflow-hidden">
-        <img
-          src="../assets/banner.png"
-          alt="Banner"
-          class="w-full h-auto object-cover rounded-2xl"
-        />
-      </div>
-    </div>
+    <!-- Üstteki banner -->
+<div
+  v-if="props.showBanner"
+  class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none"
+>
+  <img
+    src="../assets/banner.png"
+    alt="Banner"
+    class="w-full h-auto object-cover rounded-2xl"
+  />
+</div>
+
 
     <!-- Kategori Seçim Bölümü -->
     <div class="mb-6">
