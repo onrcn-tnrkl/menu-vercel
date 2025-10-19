@@ -2,6 +2,20 @@
   <div class="max-w-5xl mx-auto p-4">
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
+    <!-- İnce ve tema-uyumlu banner -->
+    <div v-if="props.showBanner" class="mb-6">
+      <div
+        class="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-2.5 shadow-sm"
+        role="status"
+        aria-live="polite"
+      >
+        <div class="flex items-center gap-2 text-emerald-900/80">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-4 h-4 text-emerald-700"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+          <span class="text-sm">{{ props.bannerText }}</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Kategori Seçim Bölümü -->
     <div class="mb-6">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
@@ -71,6 +85,17 @@
 
 <script setup>
 import { onMounted, computed, ref } from "vue";
+// Banner metni ve görünürlüğü için yapılandırılabilir props
+const props = defineProps({
+  bannerText: {
+    type: String,
+    default: 'Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir.'
+  },
+  showBanner: {
+    type: Boolean,
+    default: true
+  }
+});
 import { useStore } from "vuex";
 
 const store = useStore();
