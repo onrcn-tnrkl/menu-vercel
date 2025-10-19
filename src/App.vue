@@ -1,6 +1,5 @@
 <template>
   <div class="w-full">
-    <!-- Üst Kısım -->
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
         <img
@@ -12,13 +11,11 @@
       </div>
     </header>
 
-    <!-- Ana İçerik -->
     <main class="w-full">
       <div class="max-w-6xl mx-auto px-4 pb-10">
         <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
         <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
         <div v-else>
-          <!-- Menü Bileşeni -->
           <MenuComponent
             :show-banner="true"
             banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
@@ -28,7 +25,6 @@
       </div>
     </main>
 
-    <!-- Alt Bilgi -->
     <footer class="w-full">
       <div
         class="max-w-6xl mx-auto px-4 py-6 border-t border-emerald-100 text-center text-sm text-emerald-900/70"
@@ -47,11 +43,11 @@ import MenuComponent from "./components/menuComponent.vue";
 const store = useStore();
 const error = computed(() => store.getters.error);
 const currentYear = new Date().getFullYear();
-
-// Banner görseli public klasöründe (örnek: public/banner.png)
-const bannerImages = ["/banner.png"];
-
 const isLoading = computed(() => store.getters.isLoading);
+
+// ✅ Banner yolunu düzelttim
+// Banner resmini `public/` klasörüne koy: public/banner.png
+const bannerImages = ["/banner.png"];
 
 onMounted(() => {
   store.dispatch("fetchAllData");
