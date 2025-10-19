@@ -5,12 +5,13 @@
     <!-- Üstteki banner -->
     <div
       v-if="props.showBanner"
-      class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none"
+      class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none max-w-5xl mx-auto"
     >
       <BannerSlider
         v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
         :images="props.bannerImages"
         :interval-ms="4500"
+        class="w-full h-64 rounded-2xl object-cover"
       />
       <div
         v-else
