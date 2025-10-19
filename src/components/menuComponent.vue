@@ -2,35 +2,35 @@
   <div class="max-w-5xl mx-auto p-4 bg-transparent">
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
-    <!-- Üstteki banner -->
+   <!-- Üstteki banner -->
+<div
+  v-if="props.showBanner"
+  class="mb-6 rounded-2xl overflow-hidden border-none shadow-none bg-transparent p-0"
+>
+  <!-- Eğer bannerImages varsa -->
+  <BannerSlider
+    v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
+    :images="props.bannerImages"
+    :interval-ms="4500"
+    class="w-full overflow-hidden rounded-2xl"
+  />
+
+  <!-- Yoksa sabit banner resmi -->
+  <div class="relative w-full overflow-hidden rounded-2xl">
+    <img
+      src="/banner.png"
+      alt="Banner"
+      class="w-full h-[260px] md:h-[340px] object-cover object-center block"
+      style="display:block;"
+    />
     <div
-      v-if="props.showBanner"
-      class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none"
+      v-if="props.bannerText"
+      class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-emerald-900/60 text-white text-sm px-4 py-1.5 rounded-lg"
     >
-      <!-- Eğer bannerImages varsa -->
-      <BannerSlider
-        v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
-        :images="props.bannerImages"
-        :interval-ms="4500"
-      />
-      <!-- Yoksa sabit banner resmi -->
-      <div
-        v-else
-        class="rounded-2xl overflow-hidden border border-emerald-100 shadow-sm relative"
-      >
-        <img
-          src="/banner.png"
-          alt="Banner"
-          class="w-full h-[220px] md:h-[300px] object-cover object-center"
-        />
-        <div
-          v-if="props.bannerText"
-          class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-emerald-900/60 text-white text-sm px-4 py-1.5 rounded-lg"
-        >
-          {{ props.bannerText }}
-        </div>
-      </div>
+      {{ props.bannerText }}
     </div>
+  </div>
+</div>
 
     <!-- Kategori Seçim Bölümü -->
     <div class="mb-6">
