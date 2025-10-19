@@ -2,9 +2,15 @@
   <div class="max-w-5xl mx-auto p-4">
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
-    <!-- İnce ve tema-uyumlu banner -->
+    <!-- Üstteki banner: resim bannerına dönüştürüldü; görsel yoksa metin fallback -->
     <div v-if="props.showBanner" class="mb-6">
+      <BannerSlider
+        v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
+        :images="props.bannerImages"
+        :interval-ms="4500"
+      />
       <div
+        v-else
         class="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-2.5 shadow-sm"
         role="status"
         aria-live="polite"
@@ -85,6 +91,7 @@
 
 <script setup>
 import { onMounted, computed, ref } from "vue";
+import BannerSlider from './BannerSlider.vue'
 // Banner metni ve görünürlüğü için yapılandırılabilir props
 const props = defineProps({
   bannerText: {
@@ -94,6 +101,10 @@ const props = defineProps({
   showBanner: {
     type: Boolean,
     default: true
+  },
+  bannerImages: {
+    type: Array,
+    default: () => []
   }
 });
 import { useStore } from "vuex";
