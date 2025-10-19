@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <header class="w-full">
-      <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
+      <div class="max-w-5xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
         <img
           src="./assets/logo.png"
           alt="Logo"
@@ -12,7 +12,7 @@
     </header>
 
     <main class="w-full">
-      <div class="max-w-6xl mx-auto px-4 pb-10">
+      <div class="max-w-5xl mx-auto px-4 pb-10">
         <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
         <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
         <div v-else>

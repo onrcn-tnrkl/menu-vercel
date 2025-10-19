@@ -11,7 +11,7 @@
       />
       <div
         v-else
-        class="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-2.5 shadow-sm"
+        class="rounded-xl md:rounded-2xl border border-emerald-100 bg-white/90 backdrop-blur px-4 py-2.5 shadow-sm"
         role="status"
         aria-live="polite"
       >
