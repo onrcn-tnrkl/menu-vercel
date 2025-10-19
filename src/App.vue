@@ -9,6 +9,7 @@
         />
         <h1 class="text-xl font-semibold text-gray-800">Pams No : 49</h1>
       </div>
+      <BannerSlider :images="bannerImages" :interval-ms="4000" />
     </header>
 
     <main class="w-full">
@@ -37,9 +38,15 @@
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
+import BannerSlider from "./components/BannerSlider.vue";
+import bannerImage1 from "./assets/logo.png";
+import bannerImage2 from "./assets/vue.svg";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
+const isLoading = computed(() => store.getters.isLoading);
+
+const bannerImages = [bannerImage1, bannerImage2];
 
 const currentYear = new Date().getFullYear();
 
