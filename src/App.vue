@@ -49,7 +49,7 @@ const currentYear = new Date().getFullYear();
 
 // Basit örnek görseller; public içine konumlandırılabilir
 const bannerImages = [
-  '/assets/banner.png', // örnek: public/vite.svg
+  './assets/banner.png', // örnek: public/vite.svg
 ]
 
 onMounted(() => {
