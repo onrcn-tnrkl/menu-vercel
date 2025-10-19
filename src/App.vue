@@ -16,7 +16,10 @@
         <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
         <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
         <div v-else>
-          <MenuComponent />
+          <MenuComponent
+            :show-banner="true"
+            banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
+          />
         </div>
       </div>
     </main>
