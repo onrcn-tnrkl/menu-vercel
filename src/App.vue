@@ -13,7 +13,6 @@
 
     <main class="w-full">
       <div class="max-w-6xl mx-auto px-4 pb-10">
-        <BannerSlider />
         <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
         <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
         <div v-else>
