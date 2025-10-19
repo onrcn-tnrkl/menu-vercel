@@ -19,7 +19,7 @@
           <MenuComponent
             :show-banner="true"
             banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
-            :banner-images="./assets/banner.png"
+            :banner-images=bannerImages
           />
         </div>
       </div>
