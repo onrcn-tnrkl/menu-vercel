@@ -7,34 +7,20 @@
       v-if="props.showBanner"
       class="mb-6 overflow-hidden rounded-2xl bg-transparent border-none shadow-none"
     >
+      <!-- Eğer bannerImages varsa slider göster -->
       <BannerSlider
         v-if="Array.isArray(props.bannerImages) && props.bannerImages.length"
         :images="props.bannerImages"
         :interval-ms="4500"
       />
-      <div
-        v-else
-        class="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-2.5 shadow-sm"
-        role="status"
-        aria-live="polite"
-      >
-        <div class="flex items-center gap-2 text-emerald-900/80">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            class="w-4 h-4 text-emerald-700"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
-            />
-          </svg>
-          <span class="text-sm">{{ props.bannerText }}</span>
-        </div>
+    
+      <!-- Yoksa banner.png göster -->
+      <div v-else class="rounded-2xl overflow-hidden">
+        <img
+          src="../assets/banner.png"
+          alt="Banner"
+          class="w-full h-auto object-cover rounded-2xl"
+        />
       </div>
     </div>
 
