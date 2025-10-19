@@ -16,12 +16,7 @@
       class="max-w-full h-auto object-contain object-center block"
       style="width:100%; height:auto;"
     />
-    <div
-      v-if="props.bannerText"
-      class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-emerald-900/60 text-white text-sm px-4 py-1.5 rounded-lg"
-    >
-      {{ props.bannerText }}
-    </div>
+    
   </div>
 </div>
 
