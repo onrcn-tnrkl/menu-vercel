@@ -19,6 +19,7 @@
           <MenuComponent
             :show-banner="true"
             banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
+            :banner-images="bannerImages"
           />
         </div>
       </div>
@@ -45,6 +46,11 @@ const store = useStore();
 const error = computed(() => store.getters.error);
 
 const currentYear = new Date().getFullYear();
+
+// Basit örnek görseller; public içine konumlandırılabilir
+const bannerImages = [
+  '/vite.svg', // örnek: public/vite.svg
+]
 
 onMounted(() => {
   store.dispatch("fetchAllData"); // Yeni action'ı dispatch edin
