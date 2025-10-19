@@ -43,13 +43,11 @@ import MenuComponent from "./components/menuComponent.vue";
 const store = useStore();
 const error = computed(() => store.getters.error);
 const currentYear = new Date().getFullYear();
-const isLoading = computed(() => store.getters.isLoading);
 
-// ✅ Banner yolunu düzelttim
-// Banner resmini `public/` klasörüne koy: public/banner.png
+// ✅ Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
 
 onMounted(() => {
-  store.dispatch("fetchAllData");
+  store.dispatch("fetchAllData"); // Yeni action'ı dispatch edin
 });
 </script>
