@@ -7,14 +7,21 @@
   v-if="props.showBanner"
   class="mb-6 rounded-2xl overflow-hidden border-none shadow-none bg-transparent p-0"
 >
-  <!-- Yoksa sabit banner resmi -->
-  <div class="relative w-full overflow-hidden rounded-2xl">
+
+  <!-- Yoksa sabit banner -->
+  <div class="relative w-full overflow-hidden rounded-2xl flex justify-center items-center bg-white">
     <img
       src="/banner.png"
       alt="Banner"
-      class="w-full h-[260px] md:h-[340px] object-cover object-center block"
-      style="display:block;"
+      class="max-w-full h-auto object-contain object-center block"
+      style="width:100%; height:auto;"
     />
+    <div
+      v-if="props.bannerText"
+      class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-emerald-900/60 text-white text-sm px-4 py-1.5 rounded-lg"
+    >
+      {{ props.bannerText }}
+    </div>
   </div>
 </div>
 
