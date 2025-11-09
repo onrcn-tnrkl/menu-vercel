@@ -61,46 +61,62 @@
         {{ category.name }}
       </h2>
 
-      <ul
-        class="bg-white/90 backdrop-blur rounded-2xl shadow-md border border-emerald-100 divide-y divide-emerald-50"
-      >
-        <li
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 grid-auto-rows-fr">
+        <div
           v-for="item in menuItems
             .filter(i => i.category_id === category.id && i.is_active)
             .sort((a, b) => a.price - b.price)"
           :key="item.id"
-          class="relative p-4 hover:bg-emerald-50/60 transition-colors rounded-lg"
+          class="bg-white/90 backdrop-blur rounded-2xl shadow-md border border-emerald-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] flex flex-col"
+          :class="{
+            'opacity-50 blur-[1px] pointer-events-none':
+              item.is_active === false
+          }"
         >
-          <div
-            class="flex items-start justify-between gap-4"
-            :class="{
-              'opacity-50 blur-[1px] pointer-events-none':
-                item.is_active === false
-            }"
-          >
-            <div class="flex-1 min-w-0">
-              <p class="font-medium text-gray-900 truncate">{{ item.name }}</p>
-              <p
-                v-if="item.description"
-                class="mt-1 text-sm text-emerald-900/70 leading-snug line-clamp-2"
-              >
-                {{ item.description }}
-              </p>
-            </div>
-            <span
-              class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold"
+          <!-- Ürün Resmi -->
+          <div class="relative w-full aspect-square overflow-hidden flex-shrink-0">
+            <img
+              v-if="item.image_path"
+              :src="item.image_path"
+              :alt="item.name"
+              class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              @error="handleImageError"
+            />
+            <div
+              v-else
+              class="w-full h-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center"
             >
-              ₺
-              {{
-                Number(item.price).toLocaleString("tr-TR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-              }}
-            </span>
+              <svg class="w-16 md:w-20 h-16 md:h-20 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
           </div>
-        </li>
-      </ul>
+          
+          <!-- Ürün Bilgileri -->
+          <div class="p-4 flex flex-col flex-grow">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <h3 class="font-semibold text-gray-900 text-lg leading-tight">{{ item.name }}</h3>
+              <span
+                class="shrink-0 inline-flex items-center px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold"
+              >
+                ₺
+                {{
+                  Number(item.price).toLocaleString("tr-TR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })
+                }}
+              </span>
+            </div>
+            <p
+              v-if="item.description"
+              class="text-sm text-emerald-900/70 leading-relaxed line-clamp-3 flex-grow"
+            >
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -162,7 +178,43 @@ const visibleCategories = computed(() => {
   );
 });
 
+// Resim yükleme hatası yönetimi
+const handleImageError = (event) => {
+  event.target.style.display = 'none';
+  const fallbackDiv = event.target.nextElementSibling;
+  if (fallbackDiv) {
+    fallbackDiv.style.display = 'flex';
+  }
+};
+
 onMounted(() => {
   store.dispatch("fetchAllData");
 });
 </script>
+
+<style scoped>
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>
