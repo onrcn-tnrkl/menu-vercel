@@ -139,7 +139,7 @@ const currentYear = new Date().getFullYear();
 // Linkler
 const instagramUrl = "https://www.instagram.com/pams_no49/";
 // Google yorum linki (aşağıda nasıl bulacağını anlattım)
-const reviewUrl = "https://search.google.com/local/writereview?placeid=PLACE_ID_BURAYA";
+const reviewUrl = "https://search.google.com/local/writereview?placeid=ChIJbdfCMA19uRQR2SEPJTMgvWA";
 
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
