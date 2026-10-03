@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full min-h-screen">
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
         <img
@@ -12,15 +12,18 @@
     </header>
 
     <main class="w-full">
-      <div class="max-w-6xl mx-auto px-4 pb-10">
-        <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
-        <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
-        <div v-else>
-          <MenuComponent
-            :show-banner="true"
-            banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
-            :banner-images="bannerImages"
-          />
+      <div class="max-w-6xl mx-auto px-3 sm:px-4 pb-10">
+        <!-- Menü kartı -->
+        <div class="bg-[#fffaf0]/90 rounded-2xl shadow-sm p-4 sm:p-8">
+          <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
+          <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
+          <div v-else>
+            <MenuComponent
+              :show-banner="true"
+              banner-text="Güncel menüyü görüntülüyorsunuz. Fiyatlar ₺ cinsindendir."
+              :banner-images="bannerImages"
+            />
+          </div>
         </div>
       </div>
     </main>
@@ -42,12 +45,36 @@ import MenuComponent from "./components/menuComponent.vue";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
+const isLoading = computed(() => store.getters.isLoading);
 const currentYear = new Date().getFullYear();
 
-// ✅ Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
+// Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
 
 onMounted(() => {
-  store.dispatch("fetchAllData"); // Yeni action'ı dispatch edin
+  store.dispatch("fetchAllData");
 });
 </script>
+
+<style>
+body {
+  margin: 0;
+  background-color: #fbebd6;
+}
+
+/* Sabit arka plan (masaüstü / yatay ekran) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("./assets/background.jpeg") center / cover no-repeat;
+  z-index: -1;
+}
+
+/* Telefon / dikey ekran */
+@media (max-width: 768px), (orientation: portrait) {
+  body::before {
+    background-image: url("./assets/phone-background.jpeg");
+  }
+}
+</style>
