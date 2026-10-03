@@ -15,8 +15,7 @@
       <div class="max-w-6xl mx-auto px-3 sm:px-4 pb-10">
         <!-- Menü kartı -->
         <div class="bg-[#fffaf0]/90 rounded-2xl shadow-sm p-4 sm:p-8">
-          <div v-if="isLoading" class="text-gray-600 text-center py-8">Yükleniyor...</div>
-          <div v-else-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
+          <div v-if="error" class="text-red-600 text-center py-8">Hata: {{ error }}</div>
           <div v-else>
             <MenuComponent
               :show-banner="true"
@@ -45,7 +44,6 @@ import MenuComponent from "./components/menuComponent.vue";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
-const isLoading = computed(() => store.getters.isLoading);
 const currentYear = new Date().getFullYear();
 
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
