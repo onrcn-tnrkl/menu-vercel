@@ -3,22 +3,7 @@
     <h1 class="text-3xl md:text-4xl font-semibold text-center mb-6 text-emerald-900">Menü</h1>
 
    <!-- Üstteki banner -->
-<div
-  v-if="props.showBanner"
-  class="mb-6 rounded-2xl overflow-hidden border-none shadow-none bg-transparent p-0"
->
 
-  <!-- Yoksa sabit banner -->
-  <div class="relative w-full overflow-hidden rounded-2xl flex justify-center items-center bg-white">
-    <img
-      src="/banner.png"
-      alt="Banner"
-      class="max-w-full h-auto object-contain object-center block"
-      style="width:100%; height:auto;"
-    />
-    
-  </div>
-</div>
 
     <!-- Kategori Seçim Bölümü -->
     <div class="mb-6">
