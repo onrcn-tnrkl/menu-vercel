@@ -24,6 +24,38 @@
       </div>
     </Transition>
 
+    <!-- Google yorum baloncuğu -->
+    <Transition name="bubble">
+      <div
+        v-if="showReviewBubble && !showPopup"
+        class="fixed bottom-4 right-4 z-40 max-w-[260px]"
+      >
+        <a
+          :href="reviewUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3 rounded-2xl bg-white p-3 pr-8 shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
+        >
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xl"
+          >
+            ⭐
+          </span>
+          <span class="text-sm leading-snug text-gray-800">
+            <span class="block font-semibold">Yorumlarınız bizim için önemli!</span>
+            <span class="text-xs text-gray-600">Google'da bizi değerlendirin</span>
+          </span>
+        </a>
+        <button
+          @click="closeReviewBubble"
+          aria-label="Kapat"
+          class="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+        >
+          ✕
+        </button>
+      </div>
+    </Transition>
+
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
         <!-- Dönen logo: tıklayınca Instagram'a gider -->
@@ -53,14 +85,14 @@
                 stroke-width="1.8"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="h-20 w-20"
+                class="h-16 w-16"
               >
                 <rect x="3" y="3" width="18" height="18" rx="5" />
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
               </svg>
-              <span class="mt-2 text-lg font-semibold">@pams_no49</span>
-              <span class="mt-2 text-lg font-semibold">Bizi takip edin</span>
+              <span class="mt-1 text-base font-semibold">@pams_no49</span>
+              <span class="text-sm font-medium">Bizi takip edin</span>
             </div>
           </div>
         </a>
@@ -104,8 +136,10 @@ const store = useStore();
 const error = computed(() => store.getters.error);
 const currentYear = new Date().getFullYear();
 
-// Instagram sayfanın adresini buraya yaz
+// Linkler
 const instagramUrl = "https://www.instagram.com/pams_no49/";
+// Google yorum linki (aşağıda nasıl bulacağını anlattım)
+const reviewUrl = "https://search.google.com/local/writereview?placeid=PLACE_ID_BURAYA";
 
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
@@ -133,15 +167,32 @@ const scheduleFlip = () => {
   }, wait);
 };
 
+// Google yorum baloncuğu
+const REVIEW_DELAY_MS = 15000; // sayfa açıldıktan kaç ms sonra çıksın (15 sn)
+const showReviewBubble = ref(false);
+let reviewTimer = null;
+
+const closeReviewBubble = () => {
+  showReviewBubble.value = false;
+  sessionStorage.setItem("reviewBubbleClosed", "1"); // yenileyince tekrar çıkmasın
+};
+
 onMounted(() => {
   store.dispatch("fetchAllData");
   window.addEventListener("keydown", onKeydown);
   scheduleFlip();
+
+  if (!sessionStorage.getItem("reviewBubbleClosed")) {
+    reviewTimer = setTimeout(() => {
+      showReviewBubble.value = true;
+    }, REVIEW_DELAY_MS);
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", onKeydown);
   clearTimeout(flipTimer);
+  clearTimeout(reviewTimer);
 });
 </script>
 
@@ -175,6 +226,17 @@ body::before {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* Yorum baloncuğu geçiş efekti */
+.bubble-enter-active,
+.bubble-leave-active {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.bubble-enter-from,
+.bubble-leave-to {
+  opacity: 0;
+  transform: translateY(16px) scale(0.95);
 }
 
 /* Dönen logo */
