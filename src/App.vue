@@ -29,7 +29,7 @@
         <!-- Dönen logo: tıklayınca Instagram'a gider -->
         <a
           :href="instagramUrl"
-          target="https://www.instagram.com/pams_no49/"
+          target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram sayfamıza git"
           class="logo-scene mb-2 block h-48 w-48"
@@ -105,7 +105,7 @@ const error = computed(() => store.getters.error);
 const currentYear = new Date().getFullYear();
 
 // Instagram sayfanın adresini buraya yaz
-const instagramUrl = "https://www.instagram.com/KULLANICI_ADIN/";
+const instagramUrl = "https://www.instagram.com/pams_no49/";
 
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
