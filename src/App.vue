@@ -1,4 +1,4 @@
-dosya bu<template>
+<template>
   <div class="w-full">
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
