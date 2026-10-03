@@ -29,7 +29,7 @@
         <!-- Dönen logo: tıklayınca Instagram'a gider -->
         <a
           :href="instagramUrl"
-          target="_blank"
+          target="https://www.instagram.com/pams_no49/"
           rel="noopener noreferrer"
           aria-label="Instagram sayfamıza git"
           class="logo-scene mb-2 block h-48 w-48"
@@ -59,6 +59,7 @@
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
               </svg>
+              <span class="mt-2 text-lg font-semibold">@pams_no49</span>
               <span class="mt-2 text-lg font-semibold">Bizi takip edin</span>
             </div>
           </div>
