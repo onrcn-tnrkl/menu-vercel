@@ -1,5 +1,29 @@
 <template>
   <div class="w-full min-h-screen">
+    <!-- Açılış pop-up'ı -->
+    <Transition name="fade">
+      <div
+        v-if="showPopup"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+        @click.self="closePopup"
+      >
+        <div class="relative">
+          <button
+            @click="closePopup"
+            aria-label="Kapat"
+            class="absolute -top-3 -right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-xl font-bold leading-none text-gray-800 shadow-lg hover:bg-gray-100"
+          >
+            ✕
+          </button>
+          <img
+            :src="popupImage"
+            alt="Duyuru"
+            class="block max-h-[80vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl sm:max-w-md"
+          />
+        </div>
+      </div>
+    </Transition>
+
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
         <img
@@ -38,9 +62,10 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
+import popupImage from "./assets/pop-up.jpeg";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
@@ -49,8 +74,22 @@ const currentYear = new Date().getFullYear();
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
 
+// Pop-up
+const showPopup = ref(true);
+const closePopup = () => {
+  showPopup.value = false;
+};
+const onKeydown = (e) => {
+  if (e.key === "Escape") closePopup();
+};
+
 onMounted(() => {
   store.dispatch("fetchAllData");
+  window.addEventListener("keydown", onKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", onKeydown);
 });
 </script>
 
@@ -74,5 +113,15 @@ body::before {
   body::before {
     background-image: url("./assets/phone-background.jpeg");
   }
+}
+
+/* Pop-up geçiş efekti */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
