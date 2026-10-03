@@ -26,11 +26,43 @@
 
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
-        <img
-          src="./assets/logo.png"
-          alt="Logo"
-          class="w-48 h-48 mb-2 rounded-full object-cover shadow-md"
-        />
+        <!-- Dönen logo: tıklayınca Instagram'a gider -->
+        <a
+          :href="instagramUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram sayfamıza git"
+          class="logo-scene mb-2 block h-48 w-48"
+        >
+          <div class="logo-card" :class="{ flipped: isFlipped }">
+            <!-- Ön yüz: normal logo -->
+            <img
+              src="./assets/logo.png"
+              alt="Logo"
+              class="logo-face h-full w-full rounded-full object-cover shadow-md"
+            />
+            <!-- Arka yüz: Instagram -->
+            <div
+              class="logo-face logo-back flex flex-col items-center justify-center rounded-full text-white shadow-md"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-20 w-20"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+              </svg>
+              <span class="mt-2 text-lg font-semibold">Bizi takip edin</span>
+            </div>
+          </div>
+        </a>
         <h1 class="text-xl font-semibold text-gray-800">Pams No : 49</h1>
       </div>
     </header>
@@ -71,6 +103,9 @@ const store = useStore();
 const error = computed(() => store.getters.error);
 const currentYear = new Date().getFullYear();
 
+// Instagram sayfanın adresini buraya yaz
+const instagramUrl = "https://www.instagram.com/KULLANICI_ADIN/";
+
 // Banner resmini `public/` klasörüne koy (örnek: public/banner.png)
 const bannerImages = ["/banner.png"];
 
@@ -83,13 +118,29 @@ const onKeydown = (e) => {
   if (e.key === "Escape") closePopup();
 };
 
+// Logo dönme animasyonu
+const isFlipped = ref(false);
+const SHOW_LOGO_MS = 4000; // normal logo ekranda kalma süresi
+const SHOW_INSTAGRAM_MS = 3000; // Instagram yüzü ekranda kalma süresi
+let flipTimer = null;
+
+const scheduleFlip = () => {
+  const wait = isFlipped.value ? SHOW_INSTAGRAM_MS : SHOW_LOGO_MS;
+  flipTimer = setTimeout(() => {
+    isFlipped.value = !isFlipped.value;
+    scheduleFlip();
+  }, wait);
+};
+
 onMounted(() => {
   store.dispatch("fetchAllData");
   window.addEventListener("keydown", onKeydown);
+  scheduleFlip();
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", onKeydown);
+  clearTimeout(flipTimer);
 });
 </script>
 
@@ -123,5 +174,37 @@ body::before {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* Dönen logo */
+.logo-scene {
+  perspective: 1000px;
+}
+.logo-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.logo-card.flipped {
+  transform: rotateY(180deg);
+}
+.logo-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.logo-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+}
+
+/* Hareketi azaltmayı tercih eden kullanıcılar için */
+@media (prefers-reduced-motion: reduce) {
+  .logo-card {
+    transition-duration: 0.01s;
+  }
 }
 </style>
