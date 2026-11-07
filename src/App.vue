@@ -49,25 +49,27 @@
     </Transition>
 
     <!-- Sağ alt köşe: bildirimler (Google yorum baloncuğu üstte, Pams kart hatırlatması altta sabit) -->
-    <div class="pointer-events-none fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3">
+    <div
+      class="pointer-events-none fixed bottom-3 right-3 z-40 flex w-60 flex-col gap-2 sm:bottom-4 sm:right-4 sm:w-64"
+    >
       <!-- Google yorum baloncuğu -->
       <Transition name="bubble">
         <div
           v-if="showReviewBubble && !showPopup"
-          class="pointer-events-auto relative max-w-[260px]"
+          class="pointer-events-auto relative w-full"
         >
           <a
             :href="reviewUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-3 rounded-2xl bg-white p-3 pr-8 shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
+            class="flex w-full items-center gap-2.5 rounded-2xl bg-white p-2.5 pr-8 shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
           >
             <span
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xl"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 text-lg"
             >
               ⭐
             </span>
-            <span class="text-sm leading-snug text-gray-800">
+            <span class="text-[13px] leading-snug text-gray-800">
               <span class="block font-semibold">Yorumlarınız bizim için önemli!</span>
               <span class="text-xs text-gray-600">Google'da bizi değerlendirin</span>
             </span>
@@ -87,14 +89,14 @@
         type="button"
         @click="openCardPopup"
         aria-label="Pams kart bilgisini aç"
-        class="pointer-events-auto flex max-w-[260px] items-center gap-3 rounded-2xl bg-white p-3 pr-5 text-left shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
+        class="pointer-events-auto flex w-full items-center gap-2.5 rounded-2xl bg-white p-2.5 pr-4 text-left shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
       >
         <span
-          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100"
+          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100"
         >
-          <img :src="cartIcon" alt="" class="h-7 w-7 object-contain" />
+          <img :src="cartIcon" alt="" class="h-6 w-6 object-contain" />
         </span>
-        <span class="text-sm font-semibold leading-snug text-gray-800">
+        <span class="text-[13px] font-semibold leading-snug text-gray-800">
           Pams kartınızı unutmayın
         </span>
       </button>
@@ -162,7 +164,7 @@
 
     <footer class="w-full">
       <div
-        class="max-w-6xl mx-auto px-4 py-6 border-t border-emerald-100 text-center text-sm text-emerald-900/70"
+        class="max-w-6xl mx-auto px-4 pt-6 pb-36 sm:pb-6 border-t border-emerald-100 text-center text-sm text-emerald-900/70"
       >
         © {{ currentYear }} Onurcan Tanrıkulu. Tüm hakları saklıdır.
       </div>
