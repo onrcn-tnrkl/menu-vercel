@@ -24,6 +24,30 @@
       </div>
     </Transition>
 
+    <!-- Pams kart pop-up'ı (kart hatırlatmasına tıklayınca açılır) -->
+    <Transition name="fade">
+      <div
+        v-if="showCardPopup"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+        @click.self="closeCardPopup"
+      >
+        <div class="relative">
+          <button
+            @click="closeCardPopup"
+            aria-label="Kapat"
+            class="absolute -top-3 -right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-xl font-bold leading-none text-gray-800 shadow-lg hover:bg-gray-100"
+          >
+            ✕
+          </button>
+          <img
+            :src="cardPopupImage"
+            alt="Pams kart"
+            class="block max-h-[80vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl sm:max-w-md"
+          />
+        </div>
+      </div>
+    </Transition>
+
     <!-- Sağ alt köşe: bildirimler (Google yorum baloncuğu üstte, Pams kart hatırlatması altta sabit) -->
     <div class="pointer-events-none fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3">
       <!-- Google yorum baloncuğu -->
@@ -58,10 +82,12 @@
         </div>
       </Transition>
 
-      <!-- Pams kart hatırlatması: sürekli görünür, kapatma yok, tıklamaları engellemez -->
-      <div
-        role="note"
-        class="flex max-w-[260px] items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-xl ring-1 ring-black/5"
+      <!-- Pams kart hatırlatması: sürekli görünür, kapatma yok; tıklayınca pop-up açılır -->
+      <button
+        type="button"
+        @click="openCardPopup"
+        aria-label="Pams kart bilgisini aç"
+        class="pointer-events-auto flex max-w-[260px] items-center gap-3 rounded-2xl bg-white p-3 pr-5 text-left shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
       >
         <span
           class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100"
@@ -71,7 +97,7 @@
         <span class="text-sm font-semibold leading-snug text-gray-800">
           Pams kartınızı unutmayın
         </span>
-      </div>
+      </button>
     </div>
 
     <header class="w-full">
@@ -150,6 +176,7 @@ import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
 import popupImage from "./assets/logo.jpeg";
 import cartIcon from "./assets/cart.svg";
+import cardPopupImage from "./assets/pop-up.jpeg";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
@@ -168,8 +195,21 @@ const showPopup = ref(true);
 const closePopup = () => {
   showPopup.value = false;
 };
+
+// Pams kart pop-up'ı
+const showCardPopup = ref(false);
+const openCardPopup = () => {
+  showCardPopup.value = true;
+};
+const closeCardPopup = () => {
+  showCardPopup.value = false;
+};
+
 const onKeydown = (e) => {
-  if (e.key === "Escape") closePopup();
+  if (e.key === "Escape") {
+    closePopup();
+    closeCardPopup();
+  }
 };
 
 // Logo dönme animasyonu
