@@ -69,7 +69,7 @@
           <div class="logo-card" :class="{ flipped: isFlipped }">
             <!-- Ön yüz: normal logo -->
             <img
-              src="./assets/logo.png"
+              src="./assets/logo.jpeg"
               alt="Logo"
               class="logo-face h-full w-full rounded-full object-cover shadow-md"
             />
