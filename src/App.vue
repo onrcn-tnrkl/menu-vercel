@@ -24,37 +24,55 @@
       </div>
     </Transition>
 
-    <!-- Google yorum baloncuğu -->
-    <Transition name="bubble">
-      <div
-        v-if="showReviewBubble && !showPopup"
-        class="fixed bottom-4 right-4 z-40 max-w-[260px]"
-      >
-        <a
-          :href="reviewUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-3 rounded-2xl bg-white p-3 pr-8 shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
+    <!-- Sağ alt köşe: bildirimler (Google yorum baloncuğu üstte, Pams kart hatırlatması altta sabit) -->
+    <div class="pointer-events-none fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3">
+      <!-- Google yorum baloncuğu -->
+      <Transition name="bubble">
+        <div
+          v-if="showReviewBubble && !showPopup"
+          class="pointer-events-auto relative max-w-[260px]"
         >
-          <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xl"
+          <a
+            :href="reviewUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 rounded-2xl bg-white p-3 pr-8 shadow-xl ring-1 ring-black/5 transition hover:scale-[1.03]"
           >
-            ⭐
-          </span>
-          <span class="text-sm leading-snug text-gray-800">
-            <span class="block font-semibold">Yorumlarınız bizim için önemli!</span>
-            <span class="text-xs text-gray-600">Google'da bizi değerlendirin</span>
-          </span>
-        </a>
-        <button
-          @click="closeReviewBubble"
-          aria-label="Kapat"
-          class="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+            <span
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xl"
+            >
+              ⭐
+            </span>
+            <span class="text-sm leading-snug text-gray-800">
+              <span class="block font-semibold">Yorumlarınız bizim için önemli!</span>
+              <span class="text-xs text-gray-600">Google'da bizi değerlendirin</span>
+            </span>
+          </a>
+          <button
+            @click="closeReviewBubble"
+            aria-label="Kapat"
+            class="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+          >
+            ✕
+          </button>
+        </div>
+      </Transition>
+
+      <!-- Pams kart hatırlatması: sürekli görünür, kapatma yok, tıklamaları engellemez -->
+      <div
+        role="note"
+        class="flex max-w-[260px] items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-xl ring-1 ring-black/5"
+      >
+        <span
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100"
         >
-          ✕
-        </button>
+          <img :src="cartIcon" alt="" class="h-7 w-7 object-contain" />
+        </span>
+        <span class="text-sm font-semibold leading-snug text-gray-800">
+          Pams kartınızı unutmayın
+        </span>
       </div>
-    </Transition>
+    </div>
 
     <header class="w-full">
       <div class="max-w-6xl mx-auto flex flex-col items-center pt-8 pb-4 px-4">
@@ -131,6 +149,7 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
 import popupImage from "./assets/logo.jpeg";
+import cartIcon from "./assets/cart.svg";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
