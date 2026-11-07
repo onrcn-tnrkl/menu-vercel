@@ -69,7 +69,7 @@
           <div class="logo-card" :class="{ flipped: isFlipped }">
             <!-- Ön yüz: normal logo -->
             <img
-              src="./assets/logo.jpeg"
+              src="./assets/logo.png"
               alt="Logo"
               class="logo-face h-full w-full rounded-full object-cover shadow-md"
             />
@@ -130,7 +130,7 @@
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 import MenuComponent from "./components/menuComponent.vue";
-import popupImage from "./assets/pop-up.jpeg";
+import popupImage from "./assets/logo.jpeg";
 
 const store = useStore();
 const error = computed(() => store.getters.error);
